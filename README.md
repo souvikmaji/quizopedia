@@ -42,3 +42,19 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 
+
+## Development and validation
+
+Use Node.js 22 or 24 (the `.nvmrc` selects 22). Install the committed dependency tree with `npm ci`.
+
+```sh
+npm start
+npm run typecheck
+npm run lint
+CI=true npm test -- --watchAll=false --runInBand
+CI=true npm run build
+```
+
+The app continues to use React 16. CRA 5 uses TypeScript 4.9 and ESLint 8; the TypeScript ESLint parser and plugin are pinned to compatible versions. No legacy OpenSSL option is required.
+
+CI checks both supported Node.js versions. Regression tests mock the quiz API and cover answering ten questions, scoring, disabled answer buttons, restart, API response mapping, and network-error propagation. These tests do not depend on the availability of Open Trivia DB.
